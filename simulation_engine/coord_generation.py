@@ -1,3 +1,4 @@
+from log import log
 import random
 import math
 import simulation_graphics
@@ -13,6 +14,16 @@ def isCoordVacant(x, y):
     elif simulation_graphics.getCoordStatus(x, y) != 0: pass
     else: return True
     return False
+
+def checkArround(outreach, function, xPos, yPos):
+    xEdge = xPos - outreach
+    yEdge = yPos - outreach
+    sideLength = outreach*2+1
+    for x in range(xEdge, xEdge + sideLength):
+        for y in range(yEdge, yEdge + sideLength):
+            if xPos == x and yPos == y:
+                continue
+            if function(x, y): return
 
 def getDirection(i):
     x = POSSIBLE_DIRECTIONS[i % 3]

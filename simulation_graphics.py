@@ -14,13 +14,16 @@ def drawDot(x, y, color):
     Rect.draw(window)
 
 
+def drawAnt(x, y, ant):
+    drawDot(x, y, ant.color)
+    worldMap[x][y] = ant
 
 def drawFood(x, y):
     drawDot(x, y, "red")
     worldMap[x][y] = "food"
 
 def drawAntsNest(x, y, colony):
-    drawDot(x, y, colony.color)
+    drawDot(x, y, colony.getNestColor())
     worldMap[x][y] = colony
 
 def drawStone(x, y):

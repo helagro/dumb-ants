@@ -3,10 +3,14 @@ import simulation_graphics
 from simulation_engine import terrain_generation
 from simulation_engine import coord_generation
 from simulation_engine import food
+import ant_colony
 
 
 def tick():
+    for colony in ant_colony.colonies: 
+        colony.balanceInhabitants()
     food.spawnFood()
+
 
 
 def init():
