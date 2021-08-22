@@ -1,14 +1,16 @@
 import random
 import math
+import simulation_graphics
 
 CORDINATES_X = None
 CORDINATES_Y = None
 DOT_SIZE = 1
 POSSIBLE_DIRECTIONS = [-DOT_SIZE, 0, DOT_SIZE]
 
-def isValidCoord(x, y):
+def isCoordVacant(x, y):
     if x > CORDINATES_X or x < 0: pass
     elif y > CORDINATES_Y or y < 0: pass
+    elif simulation_graphics.getCoordStatus(x, y) != 0: pass
     else: return True
     return False
 
@@ -18,24 +20,26 @@ def getDirection(i):
     return x, y
 
 def walkRandomDirection(x, y):
-    i = round(random.uniform(0, 8))
+    originalI = round(random.uniform(1, 8)) #can't stay still
+    i = originalI
 
     while True:
         dirX,dirY = getDirection(i)
         newX = dirX + x
         newY = dirY + y
-        if isValidCoord(newX, newY):
+        if isCoordVacant(newX, newY):
             return newX, newY
         i +=1
         if i > 8: i = 0 
+        if i == originalI:
+            return None
 
-def isCoordVacant():
-    pass
 
-def generateRandomCoord():
-    x = round(random.uniform(0, CORDINATES_X))
-    y = round(random.uniform(0, CORDINATES_Y))
-    return x, y
+def generateRandomVacantCoord():
+    while True:
+        x = round(random.uniform(0, CORDINATES_X))
+        y = round(random.uniform(0, CORDINATES_Y))
+        if isCoordVacant(x,y): return x,y
 
 def init(cordinatesX, cordinatesY):
     global CORDINATES_X, CORDINATES_Y

@@ -1,14 +1,16 @@
 import simulation_engine
+import time
 
+TICK_DELAY = 0.5
 simShouldRun = False
 
 def startSim():
     global simShouldRun
     simShouldRun = True
 
-    simulation_engin.init()
     while(simShouldRun):
-        pass
+        simulation_engine.tick()
+        time.sleep(TICK_DELAY)
 
 
 def stopSim():

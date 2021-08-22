@@ -1,10 +1,10 @@
-import time
 import log
 import simulation_engine
+import simulation_cycle
 
 def main():
     log.log(5, "started")
     simulation_engine.init()
-    time.sleep(324)
+    simulation_cycle.startSim()
 
 main()

@@ -13,6 +13,12 @@ def drawDot(x, y, color):
     Rect.setFill(color)
     Rect.draw(window)
 
+
+
+def drawFood(x, y):
+    drawDot(x, y, "red")
+    worldMap[x][y] = "food"
+
 def drawAntsNest(x, y, colony):
     drawDot(x, y, colony.color)
     worldMap[x][y] = colony
@@ -20,6 +26,11 @@ def drawAntsNest(x, y, colony):
 def drawStone(x, y):
     drawDot(x, y, "grey")
     worldMap[x][y] == "stone"
+
+
+
+def getCoordStatus(x, y):
+    return worldMap[x][y]
 
 def init(width, height, windowCoordX, windowCoordY, dotSize):
     global window

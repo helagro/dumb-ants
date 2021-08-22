@@ -1,8 +1,9 @@
 import log
 import random
+from simulation_engine import food
 
 colonies = []
-possibleColors = ["cyan4", "red4", "green4", "blue4", "pink4", "yellow4"]
+possibleColors = ["cyan4", "green4", "blue4", "pink4", "yellow4"]
 
 class AntColony:
     def generateColor(self):
@@ -28,6 +29,8 @@ class AntColony:
                 log.log(1, "ran out of colors!")
                 return False
 
+    def eatFood():
+        food.foodAmount -= 1
 
     def __init__(self):
         if not self.generateColor(): return
