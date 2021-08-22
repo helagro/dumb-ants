@@ -6,7 +6,7 @@ def startSim():
     global simShouldRun
     simShouldRun = True
 
-    simulation_engine.init()
+    simulation_engin.init()
     while(simShouldRun):
         pass
 
