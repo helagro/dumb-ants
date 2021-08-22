@@ -16,6 +16,7 @@ class AntColony:
     def leaveNest(self, x, y):
         if not coord_generation.isCoordVacant(x, y): return False
         ant = self.inhabitants[0]
+        ant.setPos(x, y)
         del self.inhabitants[0]
         self.hunterGatherers.append(ant)
         simulation_graphics.drawAnt(x, y, ant)
@@ -31,6 +32,11 @@ class AntColony:
         
         for _ in range(difference):
             coord_generation.checkArround(1, self.leaveNest, self.x, self.y)
+
+    def tick(self):
+        for ant in self.hunterGatherers:
+            ant.tick()
+        self.balanceInhabitants()
 
     def getNestColor(self):
         return self.color + "4"

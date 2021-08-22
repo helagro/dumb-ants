@@ -8,7 +8,7 @@ import ant_colony
 
 def tick():
     for colony in ant_colony.colonies: 
-        colony.balanceInhabitants()
+        colony.tick()
     food.spawnFood()
 
 

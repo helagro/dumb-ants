@@ -5,14 +5,19 @@ DOT_SIZE_HALF = None
 window = None
 worldMap = None
 
-def drawDot(x, y, color):
+def drawDot(x, y, color, outlineColor = "black"):
     ll = Point(x - DOT_SIZE_HALF, y -DOT_SIZE_HALF)
     tr = Point(x + DOT_SIZE_HALF, y + DOT_SIZE_HALF)
     
     Rect = Rectangle(ll, tr)
     Rect.setFill(color)
     Rect.draw(window)
+    Rect.setOutline(outlineColor)
 
+
+def drawBackground(x, y):
+    drawDot(x, y, "white", "white")
+    worldMap[x][y] = 0
 
 def drawAnt(x, y, ant):
     drawDot(x, y, ant.color)
