@@ -22,7 +22,12 @@ def getStraightDirectionToTarget(x, y, targetX, targetY):
     distance = getDistance(x, y, targetX, targetY)
     diffX = targetX - x
     diffY = targetY - y
-    direction = {"x":math.ceil(diffX/distance), "y":math.ceil(diffY/distance), "distance":distance}
+    floatDirectionX = diffX/distance
+    floatDirectionY = diffY/distance
+    direction = {
+        "x":math.ceil(floatDirectionX) if floatDirectionX > 0 else math.floor(floatDirectionX), 
+        "y":math.ceil(floatDirectionY) if floatDirectionY > 0 else math.floor(floatDirectionY), 
+        "distance":distance}
     return direction
 
 def isCoordVacant(x, y):
