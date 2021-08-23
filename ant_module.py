@@ -12,28 +12,42 @@ class Ant:
         #self.hasFood = True
 
     def move(self):
-        newPos = coord_generation.walkRandomDirection(self.x, self.y, self.directionI)
-        if newPos == None: return
+        newX = None
+        newY = None
 
-        newX, newY, directionI = newPos
+        if self.directions["distance"] != 0:
+            newX = self.x + self.directions["x"]
+            newY = self.y + self.directions["y"]
+            self.directions["distance"] -= 1
+            lastDirectionI = self.directions["x"], self.directions["y"]
+        else:
+            newPos = coord_generation.walkRandomDirection(self.x, self.y, self.lastDirectionI)
+            if newPos == None: return
+            newX, newY, lastDirectionI = newPos
+            self.lastDirectionI = lastDirectionI
+
+        if self.x == newX and self.y == newY: return
+
         simulation_graphics.drawAnt(newX, newY, self)
         simulation_graphics.drawBackground(self.x, self.y)
         self.x = newX
         self.y = newY
-        self.directionI = directionI
 
     def lookAtPlace(self, x, y):
         thingAtPlace = simulation_graphics.getCoordStatus(x, y)
         if thingAtPlace == 0: return False
         distanceFromAnt = math.floor(coord_generation.getDistance(self.x, self.y, x, y))
 
-        if thingAtPlace == "food" and distanceFromAnt == 1 and not self.hasFood:
-            self.eatFood(x, y)
+        if thingAtPlace == "food" and not self.hasFood:
+            if distanceFromAnt == 1:
+                self.eatFood(x, y)
+            else:
+                self.directions = coord_generation.getStraightDirectionToTarget(self.x, self.y, x, y)
 
         #print("look", thingAtPlace, self.color, distanceFromAnt)
 
     def lookAround(self):
-        coord_generation.checkArround(2, self.lookAtPlace, self.x, self.y)
+        coord_generation.checkArround(4, self.lookAtPlace, self.x, self.y)
 
     def tick(self):
         self.lookAround()
@@ -46,6 +60,7 @@ class Ant:
     def __init__(self, colony):
         self.colony = colony
         self.color = colony.color
-        self.directionI = None
+        self.lastDirectionI = None
         self.hasFood = False
+        self.directions = {"distance":0} 
  

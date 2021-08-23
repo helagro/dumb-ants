@@ -1,7 +1,7 @@
 import simulation_engine
 import time
 
-TICK_DELAY = 0.8
+TICK_DELAY = 0.4
 simShouldRun = False
 
 def startSim():

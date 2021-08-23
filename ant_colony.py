@@ -5,7 +5,7 @@ from simulation_engine import coord_generation
 import ant_module
 import simulation_graphics
 
-INITIAL_INHABITANTS = 2
+INITIAL_INHABITANTS = 1
 POSSIBLE_COLORS = ["cyan", "green", "blue", "pink", "yellow"]
 colonies = []
 
