@@ -35,9 +35,8 @@ def drawStone(x, y):
     drawDot(x, y, "grey")
     worldMap[x][y] = "stone"
 
-
-
 def getCoordStatus(x, y):
+    if x >= len(worldMap) or y >= len(worldMap[x]): return 0
     return worldMap[x][y]
 
 def init(width, height, windowCoordX, windowCoordY, dotSize):

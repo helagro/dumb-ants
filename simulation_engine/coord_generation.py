@@ -8,6 +8,13 @@ CORDINATES_X = None
 CORDINATES_Y = None
 DOT_SIZE = 1
 POSSIBLE_DIRECTIONS = [-DOT_SIZE, 0, DOT_SIZE]
+CHANCE_OF_STAYING_ON_COURSE = 4
+
+def getDistance(posX, posY, destX, destY):
+    diffX = posX - destX
+    diffY = posY - destY
+    distance = math.sqrt(diffX**2 + diffY**2)
+    return distance
 
 def isCoordVacant(x, y):
     if x > CORDINATES_X or x < 0: pass
@@ -31,21 +38,19 @@ def getDirection(i):
     y = POSSIBLE_DIRECTIONS[math.floor(i / 3)]
     return x, y
 
-def walkRandomDirection(x, y):
-    originalI = random.randint(0, 8)
-    i = originalI
+def walkRandomDirection(x, y, lastDirectionI = None):
+    i = -1
+    if lastDirectionI != None and random.randint(0, 10) <= CHANCE_OF_STAYING_ON_COURSE:
+        i = lastDirectionI
+    else: i = random.randint(1, 8)
 
-    while True:
-        dirX,dirY = getDirection(i)
-        newX = dirX + x
-        newY = dirY + y
-        if isCoordVacant(newX, newY):
-            return newX, newY
-        i -=1
-        if i < 0: i = 8
-        if i == originalI:
-            log(2, "No vacant spaces")
-            return None
+    dirX,dirY = getDirection(i)
+    newX = dirX + x
+    newY = dirY + y
+
+    if isCoordVacant(newX, newY):
+        return newX, newY, i
+    return None
 
 
 def generateRandomVacantCoord():

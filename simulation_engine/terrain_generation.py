@@ -5,7 +5,7 @@ import ant_colony
 from simulation_engine import food
 
 STONE_FORMATIONS_AMOUNT = 30
-LONGEST_STONE_GROUP = 70
+LONGEST_STONE_GROUP = 150
 STARTING_COLONIES_AMOUNT = 2
 
 def generateAntNests():
@@ -16,12 +16,13 @@ def generateAntNests():
 
 def walkAStoneFormation(x, y):
     pathLength = round(random.uniform(0, LONGEST_STONE_GROUP))
+    directionI = None
 
     for _ in range(pathLength):
-        coords = coord_generation.walkRandomDirection(x, y)
+        coords = coord_generation.walkRandomDirection(x, y, directionI)
         if coords == None:
             break
-        x,y = coords
+        x, y, directionI = coords
         simulation_graphics.drawStone(x,y)
 
 def generateStones():
