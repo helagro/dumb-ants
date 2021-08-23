@@ -33,7 +33,7 @@ def drawAntsNest(x, y, colony):
 
 def drawStone(x, y):
     drawDot(x, y, "grey")
-    worldMap[x][y] == "stone"
+    worldMap[x][y] = "stone"
 
 
 

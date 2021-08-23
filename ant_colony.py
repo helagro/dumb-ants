@@ -58,7 +58,7 @@ class AntColony:
 
             i += 1
             if i == len(POSSIBLE_COLORS):
-                i == 0
+                i = 0
 
             if i == originalI:
                 log.log(1, "ran out of colors!")

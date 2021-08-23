@@ -2,6 +2,7 @@ from log import log
 import random
 import math
 import simulation_graphics
+import time
 
 CORDINATES_X = None
 CORDINATES_Y = None
@@ -26,12 +27,12 @@ def checkArround(outreach, function, xPos, yPos):
             if function(x, y): return
 
 def getDirection(i):
-    x = POSSIBLE_DIRECTIONS[i % 3]
+    x = POSSIBLE_DIRECTIONS[(i % 3)]
     y = POSSIBLE_DIRECTIONS[math.floor(i / 3)]
     return x, y
 
 def walkRandomDirection(x, y):
-    originalI = round(random.uniform(1, 8)) #can't stay still
+    originalI = random.randint(0, 8)
     i = originalI
 
     while True:
@@ -40,9 +41,10 @@ def walkRandomDirection(x, y):
         newY = dirY + y
         if isCoordVacant(newX, newY):
             return newX, newY
-        i +=1
-        if i > 8: i = 0 
+        i -=1
+        if i < 0: i = 8
         if i == originalI:
+            log(2, "No vacant spaces")
             return None
 
 
@@ -53,6 +55,9 @@ def generateRandomVacantCoord():
         if isCoordVacant(x,y): return x,y
 
 def init(cordinatesX, cordinatesY):
+    random.seed(time.time())
+
     global CORDINATES_X, CORDINATES_Y
     CORDINATES_X = cordinatesX
     CORDINATES_Y = cordinatesY
+
