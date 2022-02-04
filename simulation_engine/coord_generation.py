@@ -18,17 +18,11 @@ def getDistance(posX, posY, destX, destY):
     distance = int(math.sqrt(diffX**2 + diffY**2))
     return distance
 
-def getStraightDirectionToTarget(x, y, targetX, targetY):
-    distance = getDistance(x, y, targetX, targetY)
-    diffX = targetX - x
-    diffY = targetY - y
-    floatDirectionX = diffX/distance
-    floatDirectionY = diffY/distance
-    direction = {
-        "x":math.ceil(floatDirectionX) if floatDirectionX > 0 else math.floor(floatDirectionX), 
-        "y":math.ceil(floatDirectionY) if floatDirectionY > 0 else math.floor(floatDirectionY), 
-        "distance":distance}
-    return direction
+def getDirection(i):
+    x = POSSIBLE_DIRECTIONS[(i % 3)]
+    y = POSSIBLE_DIRECTIONS[math.floor(i / 3)]
+    return x, y
+
 
 def isCoordVacant(x, y):
     if x > CORDINATES_X or x < 0: pass
@@ -46,11 +40,6 @@ def checkArround(outreach, function, xPos, yPos):
             if xPos == x and yPos == y:
                 continue
             if function(x, y): return
-
-def getDirection(i):
-    x = POSSIBLE_DIRECTIONS[(i % 3)]
-    y = POSSIBLE_DIRECTIONS[math.floor(i / 3)]
-    return x, y
 
 def walkRandomDirection(x, y, lastDirectionI = None):
     i = -1

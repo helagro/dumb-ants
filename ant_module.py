@@ -3,8 +3,13 @@ import simulation_engine
 import simulation_graphics
 import math
 from simulation_engine import food
+from simulation_engine import gps
 
 class Ant:
+
+    def die(self):
+        self.colony.hunterGatherers.remove(self)
+        simulation_graphics.drawBackground(self.x, self.y)
 
     def eatFood(self, x, y):
         food.foodAmount -= 1
@@ -15,11 +20,12 @@ class Ant:
         newX = None
         newY = None
 
-        if self.directions["distance"] != 0:
-            newX = self.x + self.directions["x"]
-            newY = self.y + self.directions["y"]
-            self.directions["distance"] -= 1
-            lastDirectionI = self.directions["x"], self.directions["y"]
+        if len(self.directions) != 0:
+            print(self.directions)
+            newX = self.x + self.directions[0]["x"]
+            newY = self.y + self.directions[0]["y"]
+            del self.directions[0]
+            if not coord_generation.isCoordVacant(newX, newY): return
         else:
             newPos = coord_generation.walkRandomDirection(self.x, self.y, self.lastDirectionI)
             if newPos == None: return
@@ -38,11 +44,16 @@ class Ant:
         if thingAtPlace == 0: return False
         distanceFromAnt = math.floor(coord_generation.getDistance(self.x, self.y, x, y))
 
-        if thingAtPlace == "food" and not self.hasFood:
+        if isinstance(thingAtPlace, Ant) and thingAtPlace.colony != self.colony:
+            self.directions = gps.Gps().getRoute(self.x, self.y, x, y)
+            if distanceFromAnt == 1:
+                thingAtPlace.die()
+        elif thingAtPlace == "food" and not self.hasFood:
             if distanceFromAnt == 1:
                 self.eatFood(x, y)
             else:
-                self.directions = coord_generation.getStraightDirectionToTarget(self.x, self.y, x, y)
+
+                self.directions = gps.Gps().getRoute(self.x, self.y, x, y)
 
         #print("look", thingAtPlace, self.color, distanceFromAnt)
 
@@ -62,5 +73,5 @@ class Ant:
         self.color = colony.color
         self.lastDirectionI = None
         self.hasFood = False
-        self.directions = {"distance":0} 
+        self.directions = []
  

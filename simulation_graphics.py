@@ -44,7 +44,6 @@ def init(width, height, windowCoordX, windowCoordY, dotSize):
     global DOT_SIZE_HALF
     global worldMap
     DOT_SIZE_HALF = dotSize/2
-
     window = GraphWin(width=width, height=height)
     window.setCoords(0, 0, windowCoordX, windowCoordY)
     worldMap = [ [0]*(windowCoordY+1) for i in range(windowCoordX+1)]
